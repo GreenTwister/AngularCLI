@@ -1,9 +1,14 @@
 <div class="face-snap-card">
-  <h2>{{ title }}</h2>
-  <p>Mis en ligne le {{ createdDate }}</p>
-  <img [src]="imageUrl" [alt]="title">
-  <p>{{ description }}</p>
-  <p>
-    <button (click)="onChangeSnap()">{{ messSnapped }}</button>
-    🤌 {{ snaps }}</p>
+  <div [ngClass] = "{ snapped : faceSnap.messSnapped === 'Oops, un snap'}">
+    <h2>{{ faceSnap.title | uppercase }}</h2>
+    <p>Mis en ligne le {{ faceSnap.createdDate | date: 'dd/MM/yy, à HH:mm'  }}</p>
+<!--    <p>Mis en ligne le {{ faceSnap.createdDate | date }}</p>-->
+    <img [src]="faceSnap.imageUrl" [alt]="faceSnap.title">
+    <p>{{ faceSnap.description }}</p>
+    <p *ngIf="faceSnap.location">Photo prise à {{ faceSnap.location }}</p>
+    <p>
+      <button (click)="onSnap()">{{ faceSnap.messSnapped }}</button>
+      <span [ngStyle]="{ color: 'rgb(0, ' + faceSnap.snaps + ', 0)' }">🤌 {{ faceSnap.snaps }}</span></p>
+  </div>
+
 </div>
