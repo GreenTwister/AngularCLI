@@ -1,6 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import { FaceSnap } from '../models/face-snap.model';
 import { FaceSnapsService} from "../services/face-snaps.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-face-snap',
@@ -8,18 +9,13 @@ import { FaceSnapsService} from "../services/face-snaps.service";
   styleUrls: ['./face-snap.component.scss']
 })
 export class FaceSnapComponent {
-  constructor(private faceSnapsService: FaceSnapsService) {}
+  constructor(private faceSnapsService: FaceSnapsService,
+              private router:Router) {}
   @Input() faceSnap!: FaceSnap;
   messSnapped!:string
 
-  onSnap() {
-    if (this.messSnapped === 'Oh Snap!') {
-      this.faceSnapsService.snapFaceSnapById(this.faceSnap.id);
-      this.messSnapped = 'Oops, unSnap!';
-    } else {
-      this.faceSnap.snaps--;
-      this.messSnapped = 'Oh Snap!';
-    }
+  onViewFaceSnap() {
+    this.router.navigateByUrl(`facesnaps/${this.faceSnap.id}`);
   }
 
 }
